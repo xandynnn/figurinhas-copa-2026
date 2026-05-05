@@ -8,6 +8,6 @@ import { CssBaseline } from "@mui/material";
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <RouterProvider router={router} />,
+    <RouterProvider router={router} />
   </ThemeProvider>,
 );

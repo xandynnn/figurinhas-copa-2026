@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
-import { Title } from "../../components/title";
-import { Grid } from "@mui/material";
+import { Page } from "../../components/page";
+import { Controls } from "../../components/controls";
+import { EquipePageContainer } from "./equipe.styles";
 
 export const EquipePage = () => {
   const params = useParams();
@@ -11,11 +12,13 @@ export const EquipePage = () => {
   }
 
   return (
-    <Grid container spacing={2} sx={{ backgroundColor: "red" }}>
-      <Grid size={6}>
-        <Title countryName={code} />
-      </Grid>
-      <Grid size={6}>teste </Grid>
-    </Grid>
+    <EquipePageContainer
+      $primary="#006847"
+      $secondary="#FFFFFF"
+      $terciary="#CE1126"
+    >
+      <Page />
+      <Controls />
+    </EquipePageContainer>
   );
 };
