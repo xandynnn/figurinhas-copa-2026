@@ -1,6 +1,7 @@
 {
   "countries": [
     {
+      "id": 1,
       "name": "México",
       "code": "MEX",
       "colors": {
@@ -10,6 +11,7 @@
       }
     },
     {
+      "id": 2,
       "name": "África do Sul",
       "code": "RSA",
       "colors": {
@@ -19,6 +21,7 @@
       }
     },
     {
+      "id": 3,
       "name": "Coreia do Sul",
       "code": "KOR",
       "colors": {
@@ -28,6 +31,7 @@
       }
     },
     {
+      "id": 4,
       "name": "República Tcheca",
       "code": "CZE",
       "colors": {
@@ -37,6 +41,7 @@
       }
     },
     {
+      "id": 5,
       "name": "Canadá",
       "code": "CAN",
       "colors": {
@@ -46,6 +51,7 @@
       }
     },
     {
+      "id": 6,
       "name": "Bósnia e Herzegovina",
       "code": "BIH",
       "colors": {
@@ -55,6 +61,7 @@
       }
     },
     {
+      "id": 7,
       "name": "Catar",
       "code": "QAT",
       "colors": {
@@ -64,6 +71,7 @@
       }
     },
     {
+      "id": 8,
       "name": "Suíça",
       "code": "SUI",
       "colors": {
@@ -73,6 +81,7 @@
       }
     },
     {
+      "id": 9,
       "name": "Brasil",
       "code": "BRA",
       "colors": {
@@ -82,6 +91,7 @@
       }
     },
     {
+      "id": 10,
       "name": "Marrocos",
       "code": "MAR",
       "colors": {
@@ -91,6 +101,7 @@
       }
     },
     {
+      "id": 11,
       "name": "Haiti",
       "code": "HAI",
       "colors": {
@@ -100,6 +111,7 @@
       }
     },
     {
+      "id": 12,
       "name": "Escócia",
       "code": "SCO",
       "colors": {
@@ -109,6 +121,7 @@
       }
     },
     {
+      "id": 13,
       "name": "Estados Unidos",
       "code": "USA",
       "colors": {
@@ -118,6 +131,7 @@
       }
     },
     {
+      "id": 14,
       "name": "Paraguai",
       "code": "PAR",
       "colors": {
@@ -127,6 +141,7 @@
       }
     },
     {
+      "id": 15,
       "name": "Austrália",
       "code": "AUS",
       "colors": {
@@ -136,6 +151,7 @@
       }
     },
     {
+      "id": 16,
       "name": "Turquia",
       "code": "TUR",
       "colors": {
@@ -145,6 +161,7 @@
       }
     },
     {
+      "id": 17,
       "name": "Alemanha",
       "code": "GER",
       "colors": {
@@ -154,6 +171,7 @@
       }
     },
     {
+      "id": 18,
       "name": "Curaçau",
       "code": "CUW",
       "colors": {
@@ -163,6 +181,7 @@
       }
     },
     {
+      "id": 19,
       "name": "Costa do Marfim",
       "code": "CIV",
       "colors": {
@@ -172,6 +191,7 @@
       }
     },
     {
+      "id": 20,
       "name": "Equador",
       "code": "ECU",
       "colors": {
@@ -181,6 +201,7 @@
       }
     },
     {
+      "id": 21,
       "name": "Holanda",
       "code": "NED",
       "colors": {
@@ -190,6 +211,7 @@
       }
     },
     {
+      "id": 22,
       "name": "Japão",
       "code": "JPN",
       "colors": {
@@ -199,6 +221,7 @@
       }
     },
     {
+      "id": 23,
       "name": "Suécia",
       "code": "SWE",
       "colors": {
@@ -208,6 +231,7 @@
       }
     },
     {
+      "id": 24,
       "name": "Tunísia",
       "code": "TUN",
       "colors": {
@@ -217,6 +241,7 @@
       }
     },
     {
+      "id": 25,
       "name": "Bélgica",
       "code": "BEL",
       "colors": {
@@ -226,6 +251,7 @@
       }
     },
     {
+      "id": 26,
       "name": "Egito",
       "code": "EGY",
       "colors": {
@@ -235,6 +261,7 @@
       }
     },
     {
+      "id": 27,
       "name": "Irã",
       "code": "IRN",
       "colors": {
@@ -244,6 +271,7 @@
       }
     },
     {
+      "id": 28,
       "name": "Nova Zelândia",
       "code": "NZL",
       "colors": {
@@ -253,6 +281,7 @@
       }
     },
     {
+      "id": 29,
       "name": "Espanha",
       "code": "ESP",
       "colors": {
@@ -262,6 +291,7 @@
       }
     },
     {
+      "id": 30,
       "name": "Cabo Verde",
       "code": "CPV",
       "colors": {
@@ -271,6 +301,7 @@
       }
     },
     {
+      "id": 31,
       "name": "Arábia Saudita",
       "code": "KSA",
       "colors": {
@@ -280,6 +311,7 @@
       }
     },
     {
+      "id": 32,
       "name": "Uruguai",
       "code": "URU",
       "colors": {
@@ -289,6 +321,7 @@
       }
     },
     {
+      "id": 33,
       "name": "França",
       "code": "FRA",
       "colors": {
@@ -298,6 +331,7 @@
       }
     },
     {
+      "id": 34,
       "name": "Senegal",
       "code": "SEN",
       "colors": {
@@ -307,6 +341,7 @@
       }
     },
     {
+      "id": 35,
       "name": "Iraque",
       "code": "IRQ",
       "colors": {
@@ -316,6 +351,7 @@
       }
     },
     {
+      "id": 36,
       "name": "Noruega",
       "code": "NOR",
       "colors": {
@@ -325,6 +361,7 @@
       }
     },
     {
+      "id": 37,
       "name": "Argentina",
       "code": "ARG",
       "colors": {
@@ -334,6 +371,7 @@
       }
     },
     {
+      "id": 38,
       "name": "Argélia",
       "code": "ALG",
       "colors": {
@@ -343,6 +381,7 @@
       }
     },
     {
+      "id": 39,
       "name": "Áustria",
       "code": "AUT",
       "colors": {
@@ -352,6 +391,7 @@
       }
     },
     {
+      "id": 40,
       "name": "Jordânia",
       "code": "JOR",
       "colors": {
@@ -361,6 +401,7 @@
       }
     },
     {
+      "id": 41,
       "name": "Portugal",
       "code": "POR",
       "colors": {
@@ -370,6 +411,7 @@
       }
     },
     {
+      "id": 42,
       "name": "RD Congo",
       "code": "COD",
       "colors": {
@@ -379,6 +421,7 @@
       }
     },
     {
+      "id": 43,
       "name": "Uzbequistão",
       "code": "UZB",
       "colors": {
@@ -388,6 +431,7 @@
       }
     },
     {
+      "id": 44,
       "name": "Colômbia",
       "code": "COL",
       "colors": {
@@ -397,6 +441,7 @@
       }
     },
     {
+      "id": 45,
       "name": "Inglaterra",
       "code": "ENG",
       "colors": {
@@ -406,6 +451,7 @@
       }
     },
     {
+      "id": 46,
       "name": "Croácia",
       "code": "CRO",
       "colors": {
@@ -415,6 +461,7 @@
       }
     },
     {
+      "id": 47,
       "name": "Gana",
       "code": "GHA",
       "colors": {
@@ -424,6 +471,7 @@
       }
     },
     {
+      "id": 48,
       "name": "Panamá",
       "code": "PAN",
       "colors": {

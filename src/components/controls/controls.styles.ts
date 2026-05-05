@@ -8,4 +8,5 @@ export const ControlsContainer = styled(Box)(({ theme }) => ({
   width: "100%",
   justifyContent: "space-between",
   alignItems: "center",
+  background: "#fff",
 }));

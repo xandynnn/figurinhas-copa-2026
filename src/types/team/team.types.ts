@@ -1,4 +1,5 @@
 export interface Team {
+  id: number;
   name: string;
   code: string;
   colors: {
@@ -6,4 +7,4 @@ export interface Team {
     secondary: string;
     tertiary: string | null;
   };
-};
+}

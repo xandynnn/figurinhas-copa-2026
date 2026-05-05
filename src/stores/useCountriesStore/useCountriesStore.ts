@@ -1,9 +1,12 @@
 import { create } from "zustand";
 import { api } from "../../services/api";
 import type { CountriesStore } from "./useContriesStore.types";
+import type { Team } from "../../types/team";
+import { countries } from "../../mocks/countries.json";
 
 export const useCountriesStore = create<CountriesStore>((set, get) => ({
   countries: [],
+  selectedCountry: countries[0] || null,
   isLoading: false,
 
   fetchCountries: async () => {
@@ -26,5 +29,10 @@ export const useCountriesStore = create<CountriesStore>((set, get) => ({
 
   getCountryByCode: (code: string) => {
     return get().countries.find((c) => c.code === code);
+  },
+
+  selectCountry: (team: Team) => {
+    set({ selectedCountry: team });
+    return team;
   },
 }));
