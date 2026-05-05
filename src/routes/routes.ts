@@ -3,7 +3,7 @@ import { Home } from "../pages/home";
 import { Album } from "../pages/album";
 import { Repetidas } from "../pages/repetidas";
 
-createBrowserRouter([
+export const router = createBrowserRouter([
   { index: true, Component: Home },
   {
     Component: Album,
