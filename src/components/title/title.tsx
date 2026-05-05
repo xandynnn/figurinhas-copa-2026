@@ -8,7 +8,7 @@ export const Title = ({
   countryName,
   countryCode,
   primaryColor,
-  terciaryColor,
+  tertiaryColor,
 }: TitleProps) => {
   return (
     <Grid size={6} sx={{ padding: "8px" }} container>
@@ -16,7 +16,7 @@ export const Title = ({
         <WeAreText variant="h1" $color={primaryColor}>
           We are
         </WeAreText>
-        <CountryName variant="h2" $color={terciaryColor}>
+        <CountryName variant="h2" $color={tertiaryColor}>
           {countryName}
         </CountryName>
 

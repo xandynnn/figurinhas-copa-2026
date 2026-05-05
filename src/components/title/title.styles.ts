@@ -14,7 +14,7 @@ export const BoxTitle = styled(Box)(({ theme }) => ({
 
 export const WeAreText = styled(Typography)<{ $color: string }>(
   ({ $color }) => ({
-    fontSize: "80px",
+    fontSize: "4rem",
     textTransform: "uppercase",
     color: `${$color} !important`,
   }),
@@ -22,10 +22,10 @@ export const WeAreText = styled(Typography)<{ $color: string }>(
 
 export const CountryName = styled(Typography)<{ $color: string }>(
   ({ $color }) => ({
-    fontSize: "80px",
+    fontSize: "3rem",
     textTransform: "uppercase",
     fontWeight: "bolder",
-    lineHeight: "64px",
+    lineHeight: "3rem",
     color: `${$color} !important`,
   }),
 );

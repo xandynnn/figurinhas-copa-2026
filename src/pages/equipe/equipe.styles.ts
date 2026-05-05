@@ -4,8 +4,8 @@ import { applyOpacity } from "../../utils/opacity";
 export const EquipePageContainer = styled(Box)<{
   $primary: string;
   $secondary: string;
-  $terciary: string;
-}>(({ $primary, $secondary, $terciary }) => ({
+  $tertiary: string;
+}>(({ $primary, $secondary, $tertiary }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -16,7 +16,7 @@ export const EquipePageContainer = styled(Box)<{
   ${applyOpacity($primary, 1)} 33%,
   ${applyOpacity($secondary, 1)} 33%,
   ${applyOpacity($secondary, 1)} 66%,
-  ${applyOpacity($terciary, 1)} 66%,
-  ${applyOpacity($terciary, 1)} 100%
+  ${applyOpacity($tertiary, 1)} 66%,
+  ${applyOpacity($tertiary, 1)} 100%
 )`,
 }));
