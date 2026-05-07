@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 export const Album = () => {
-    return(<div>Album</div>)
+  return <Outlet />;
 };

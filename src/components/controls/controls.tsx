@@ -1,99 +1,216 @@
 import {
-  Button,
-  FormControl,
+  AppBar,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
+  Tooltip,
   type SelectChangeEvent,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
-import { PieChart } from "@mui/x-charts";
-import { ControlsContainer } from "./controls.styles";
+import HomeIcon from "@mui/icons-material/Home";
+import {
+  Actual,
+  BoxTexts,
+  ControlsContainer,
+  FormControlButtons,
+  FormControlInput,
+  HomeButton,
+  Percentage,
+  ProgressBarLinear,
+  Texts,
+  Total,
+} from "./controls.styles";
 import { useCountriesStore } from "../../stores/useCountriesStore";
 import { useNavigate } from "react-router";
+import type { ControlsProps } from "./controls.types";
+import { cocaColaObject, fifaObject } from "./controls.utils";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Slide from "@mui/material/Slide";
 
-export const Controls = () => {
+type Props = {
+  children: React.ReactElement;
+  direction?: "up" | "down";
+};
+
+export const HideOnScroll = ({ children, direction = "down" }: Props) => {
+  const trigger = useScrollTrigger();
+
+  return (
+    <Slide appear={false} direction={direction} in={!trigger}>
+      {children}
+    </Slide>
+  );
+};
+
+export const Controls = ({ countryCode, type }: ControlsProps) => {
   const countries = useCountriesStore((e) => e.countries);
   const navigate = useNavigate();
   const selectedCountry = useCountriesStore((e) => e.selectedCountry);
   const setCountry = useCountriesStore((e) => e.selectCountry);
+  const collection = useCountriesStore((e) => e.collection);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const getStickerIds = () => {
+    if (type === "TEAM" && countryCode) {
+      return Array.from(
+        { length: 20 },
+        (_, i) => `TEAM_${countryCode}_${i + 1}`,
+      );
+    }
+
+    if (type === "FWC") {
+      return ["FWC_0", ...Array.from({ length: 19 }, (_, i) => `FWC_${i + 1}`)];
+    }
+
+    if (type === "CC") {
+      return Array.from({ length: 14 }, (_, i) => `CC_${i + 1}`);
+    }
+
+    return [];
+  };
+
+  const ids = getStickerIds();
+  const present = ids.filter((id) => (collection[id] || 0) > 0).length;
+  // const missing = ids.length - present;
+  const percentage = Math.round((present / ids.length) * 100);
 
   const handleSelectChange = (e: SelectChangeEvent) => {
     const value = e.target.value;
-    const filterSelectedCountry = countries.filter((c) => c.code === value)[0];
-    setCountry(filterSelectedCountry);
-    navigate(`/equipe/${value}`);
+
+    if (value === "CC") {
+      setCountry(cocaColaObject);
+      navigate(`/album/especial/CC`);
+    } else if (value === "FWC") {
+      setCountry(fifaObject);
+      navigate(`/album/${value}`);
+    } else {
+      const filterSelectedCountry = countries.filter(
+        (c) => c.code === value,
+      )[0];
+      setCountry(filterSelectedCountry);
+      navigate(`/album/equipe/${value}`);
+    }
   };
 
   const handleNext = () => {
-    const next =
-      selectedCountry.id + 1 <= 48
-        ? selectedCountry.id + 1
-        : selectedCountry.id;
-    const filterSelectedCountry = countries.filter((c) => c.id === next)[0];
-    setCountry(filterSelectedCountry);
-    navigate(`/equipe/${filterSelectedCountry.code}`);
+    if (selectedCountry.id + 1 <= 48) {
+      const next = selectedCountry.id + 1;
+      const filterSelectedCountry = countries.filter((c) => c.id === next)[0];
+      setCountry(filterSelectedCountry);
+      navigate(`/album/equipe/${filterSelectedCountry.code}`);
+    } else {
+      setCountry(cocaColaObject);
+      navigate(`/album/especial/CC`);
+    }
   };
 
   const handlePrev = () => {
-    const prev =
-      selectedCountry.id - 1 >= 1 ? selectedCountry.id - 1 : selectedCountry.id;
-    const filterSelectedCountry = countries.filter((c) => c.id === prev)[0];
-    setCountry(filterSelectedCountry);
-    navigate(`/equipe/${filterSelectedCountry.code}`);
-  };
-
-  const data = [
-    { label: "Presentes", value: 10, color: "#00C49F" },
-    { label: "Faltantes", value: 10, color: "#f1f1f1" },
-  ];
-
-  const settings = {
-    margin: { right: 5 },
-    width: 80,
-    height: 44,
-    hideLegend: true,
+    if (selectedCountry.id - 1 >= 1) {
+      const prev = selectedCountry.id - 1;
+      const filterSelectedCountry = countries.filter((c) => c.id === prev)[0];
+      setCountry(filterSelectedCountry);
+      navigate(`/album/equipe/${filterSelectedCountry.code}`);
+    } else {
+      setCountry(fifaObject);
+      navigate(`/album/FWC`);
+    }
   };
 
   return (
-    <ControlsContainer>
-      <FormControl>
-        <InputLabel id="team-select-label">Seleção</InputLabel>
-        <Select
-          labelId="team-select-label"
-          id="team-select"
-          label="Seleção"
-          value={selectedCountry?.code}
-          onChange={handleSelectChange}
-        >
-          {countries.map((c) => (
-            <MenuItem key={c.code} value={c.code}>
-              {c.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <>
+      <HideOnScroll>
+        <AppBar position="fixed">
+          <ControlsContainer>
+            <Tooltip title="Ir para início" arrow>
+              <HomeButton onClick={() => navigate("/")}>
+                <HomeIcon />
+              </HomeButton>
+            </Tooltip>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handlePrev}
-        disabled={selectedCountry.id <= 1}
-      >
-        Anterior
-      </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleNext}
-        disabled={selectedCountry.id >= 48}
-      >
-        Próximo
-      </Button>
-      <PieChart
-        sx={{ flex: 0 }}
-        series={[{ outerRadius: 40, data, arcLabel: "value" }]}
-        {...settings}
-      />
-    </ControlsContainer>
+            <FormControlInput>
+              <InputLabel id="team-select-label">Seleção</InputLabel>
+              <Select
+                labelId="team-select-label"
+                id="team-select"
+                label="Seleção"
+                value={selectedCountry?.code}
+                onChange={handleSelectChange}
+                sx={{
+                  width: "100%",
+                }}
+              >
+                <MenuItem value="FWC">Fifa World Cup</MenuItem>
+                {countries.map((c) => (
+                  <MenuItem key={c.code} value={c.code}>
+                    {c.name}
+                  </MenuItem>
+                ))}
+                <MenuItem value="CC">Coca-Cola</MenuItem>
+              </Select>
+            </FormControlInput>
+
+            {!isMobile && (
+              <BoxTexts>
+                <Texts>
+                  <Actual>{present} /</Actual>
+                  <Total>{ids.length}</Total>
+                </Texts>
+                <Percentage>
+                  {percentage}% <span>Concluído</span>
+                </Percentage>
+              </BoxTexts>
+            )}
+
+            <FormControlButtons>
+              <Tooltip title="Voltar à página anterior" arrow>
+                <IconButton
+                  color="primary"
+                  onClick={handlePrev}
+                  disabled={selectedCountry.id == 0}
+                >
+                  <ArrowBackIosNewIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Ir para próxima página" arrow>
+                <IconButton
+                  color="primary"
+                  onClick={handleNext}
+                  disabled={selectedCountry.id == 49}
+                >
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              </Tooltip>
+            </FormControlButtons>
+
+            <ProgressBarLinear
+              variant="determinate"
+              value={percentage}
+              aria-label="Export data"
+              $progressBackground={selectedCountry.colors.tertiary || "#ccc"}
+              $progressColor={selectedCountry.colors.primary}
+            />
+          </ControlsContainer>
+        </AppBar>
+      </HideOnScroll>
+      {isMobile && (
+        <HideOnScroll direction="up">
+          <BoxTexts>
+            <Texts>
+              <Actual>{present} /</Actual>
+              <Total>{ids.length}</Total>
+            </Texts>
+
+            <Percentage>
+              {percentage}% <span>Concluído</span>
+            </Percentage>
+          </BoxTexts>
+        </HideOnScroll>
+      )}
+    </>
   );
 };

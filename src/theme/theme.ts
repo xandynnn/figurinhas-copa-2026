@@ -17,5 +17,12 @@ export const theme = createTheme({
         },
       },
     },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          height: 106,
+        },
+      },
+    },
   },
 });

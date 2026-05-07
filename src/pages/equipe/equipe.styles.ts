@@ -9,7 +9,8 @@ export const EquipePageContainer = styled(Box)<{
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
-  height: "100vh",
+  minHeight: "100vh",
+  height: "100%",
   background: `linear-gradient(
   135deg,
   ${applyOpacity($primary, 1)} 0%,

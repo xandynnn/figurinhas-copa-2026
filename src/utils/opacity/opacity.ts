@@ -1,5 +1,4 @@
 export const applyOpacity = (hexColor: string, opacity: number): string => {
-  // Remove the '#' if it's present
   const cleanHex = hexColor.replace("#", "");
   const r = parseInt(cleanHex.substring(0, 2), 16);
   const g = parseInt(cleanHex.substring(2, 4), 16);
