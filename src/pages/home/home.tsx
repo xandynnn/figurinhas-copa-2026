@@ -18,6 +18,7 @@ import {
   fifaObject,
 } from "../../components/controls/controls.utils";
 import { InstallButton } from "../../components/installButton";
+import { useEffect } from "react";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -58,6 +59,19 @@ export const Home = () => {
       navigate(`/album/equipe/${value}`);
     }
   };
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      console.log("INSTALL AVAILABLE");
+      console.log(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  }, []);
 
   return (
     <BoxHome>
