@@ -4,6 +4,7 @@ import { theme } from "./theme";
 import { CssBaseline } from "@mui/material";
 import { AppRoot } from "./app";
 import { registerSW } from "virtual:pwa-register";
+import "./styles/fonts.css";
 
 registerSW({
   immediate: true,
