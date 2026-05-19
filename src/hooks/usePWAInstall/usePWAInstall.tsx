@@ -7,24 +7,27 @@ interface BeforeInstallPromptEvent extends Event {
   }>;
 }
 
-export const usePWAInstall = () => {
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
+let listeners: ((value: boolean) => void)[] = [];
 
-  const [isInstallable, setIsInstallable] = useState(false);
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+
+  deferredPrompt = e as BeforeInstallPromptEvent;
+
+  listeners.forEach((l) => l(true));
+});
+
+export const usePWAInstall = () => {
+  const [isInstallable, setIsInstallable] = useState(!!deferredPrompt);
 
   useEffect(() => {
-    const handler = (e: Event) => {
-      e.preventDefault();
+    const listener = (value: boolean) => setIsInstallable(value);
 
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setIsInstallable(true);
-    };
-
-    window.addEventListener("beforeinstallprompt", handler);
+    listeners.push(listener);
 
     return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
+      listeners = listeners.filter((l) => l !== listener);
     };
   }, []);
 
@@ -36,6 +39,7 @@ export const usePWAInstall = () => {
     const choice = await deferredPrompt.userChoice;
 
     if (choice.outcome === "accepted") {
+      deferredPrompt = null;
       setIsInstallable(false);
     }
   };

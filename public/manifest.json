@@ -1,7 +1,7 @@
 {
   "id": "/",
   "name": "Álbum da Copa 2026 IguabaTem",
-  "short_name": "IguabaTem",
+  "short_name": "CopaIguabaTem",
   "description": "Álbum Virtual da Copa 2026",
   "start_url": "/",
   "display": "standalone",
