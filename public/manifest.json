@@ -1,14 +1,15 @@
 {
+  "id": "/",
   "name": "Álbum da Copa 2026 IguabaTem",
   "short_name": "IguabaTem",
   "description": "Álbum Virtual da Copa 2026",
-  "display": "standalone",
   "start_url": "/",
+  "display": "standalone",
+  "background_color": "#5ba400",
+  "theme_color": "#5ba400",
+  "lang": "pt-BR",
   "scope": "/",
   "orientation": "portrait",
-  "theme_color": "#5ba400",
-  "background_color": "#5ba400",
-
   "icons": [
     {
       "src": "/android-icon-36x36.png",
