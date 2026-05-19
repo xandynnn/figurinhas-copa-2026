@@ -5,6 +5,7 @@ export interface CountriesStore {
   isLoading: boolean;
   selectedCountry: Team;
   collection: Record<string, number>;
+  filterMissing: boolean;
 
   fetchCountries: () => Promise<void>;
   getCountryByCode: (code: string) => Team | undefined;
@@ -12,4 +13,5 @@ export interface CountriesStore {
 
   addSticker: (stickerId: string) => void;
   removeSticker: (stickerId: string) => void;
+  setFilterMissing: () => void;
 }

@@ -4,4 +4,5 @@ export interface CardProps {
   code: string;
   number: number;
   quantity: number;
+  repeatedFormat?: boolean;
 }

@@ -10,6 +10,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
+import { TbCards } from "react-icons/tb";
+import { TbPlayCardOff } from "react-icons/tb";
 import {
   Actual,
   BoxTexts,
@@ -19,6 +21,7 @@ import {
   HomeButton,
   Percentage,
   ProgressBarLinear,
+  RightBox,
   Texts,
   Total,
 } from "./controls.styles";
@@ -30,6 +33,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
+import { sortTeamsAlphabetically } from "../../utils/sort";
 
 type Props = {
   children: React.ReactElement;
@@ -52,6 +56,8 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
   const selectedCountry = useCountriesStore((e) => e.selectedCountry);
   const setCountry = useCountriesStore((e) => e.selectCountry);
   const collection = useCountriesStore((e) => e.collection);
+  const setFilterMissing = useCountriesStore((e) => e.setFilterMissing);
+  const filterMissing = useCountriesStore((e) => e.filterMissing);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -76,7 +82,6 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
 
   const ids = getStickerIds();
   const present = ids.filter((id) => (collection[id] || 0) > 0).length;
-  // const missing = ids.length - present;
   const percentage = Math.round((present / ids.length) * 100);
 
   const handleSelectChange = (e: SelectChangeEvent) => {
@@ -121,6 +126,8 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
     }
   };
 
+  const sortedCountries = sortTeamsAlphabetically(countries);
+
   return (
     <>
       <HideOnScroll>
@@ -145,7 +152,7 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
                 }}
               >
                 <MenuItem value="FWC">Fifa World Cup</MenuItem>
-                {countries.map((c) => (
+                {sortedCountries.map((c) => (
                   <MenuItem key={c.code} value={c.code}>
                     {c.name}
                   </MenuItem>
@@ -200,14 +207,26 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
       {isMobile && (
         <HideOnScroll direction="up">
           <BoxTexts>
-            <Texts>
-              <Actual>{present} /</Actual>
-              <Total>{ids.length}</Total>
-            </Texts>
+            <IconButton
+              color={filterMissing ? "primary" : "error"}
+              onClick={setFilterMissing}
+            >
+              {filterMissing ? (
+                <TbCards size={34} />
+              ) : (
+                <TbPlayCardOff size={34} />
+              )}
+            </IconButton>
+            <RightBox>
+              <Texts>
+                <Actual>{present} /</Actual>
+                <Total>{ids.length}</Total>
+              </Texts>
 
-            <Percentage>
-              {percentage}% <span>Concluído</span>
-            </Percentage>
+              <Percentage>
+                {percentage}% <span>Concluído</span>
+              </Percentage>
+            </RightBox>
           </BoxTexts>
         </HideOnScroll>
       )}

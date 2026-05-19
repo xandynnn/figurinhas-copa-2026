@@ -1,4 +1,6 @@
+import type { StickType } from "../../types/stick";
+
 export interface ControlsProps {
-  type: "TEAM" | "FWC" | "CC";
+  type: StickType;
   countryCode?: string;
 }

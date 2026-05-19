@@ -53,9 +53,9 @@ export const Actual = styled(Typography)({
 
 export const BoxTexts = styled(Box)(({ theme }) => ({
   display: "flex",
-  flexDirection: "column",
+  flexDirection: "row",
   flex: 1,
-  alignItems: "flex-end",
+  alignItems: "center",
   justifyContent: "center",
   [theme.breakpoints.down("md")]: {
     position: "fixed",
@@ -66,6 +66,14 @@ export const BoxTexts = styled(Box)(({ theme }) => ({
     padding: theme.spacing(1),
     zIndex: 100,
   },
+}));
+
+export const RightBox = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  alignItems: "flex-end",
+  justifyContent: "center",
 }));
 
 export const Texts = styled(Box)({

@@ -29,9 +29,11 @@ export const Card = ({
   code,
   number,
   quantity = 0,
+  repeatedFormat,
 }: CardProps) => {
   const addSticker = useCountriesStore((s) => s.addSticker);
   const removeSticker = useCountriesStore((s) => s.removeSticker);
+  const filterMissing = useCountriesStore((e) => e.filterMissing);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -47,78 +49,82 @@ export const Card = ({
     <>
       {number === 18 && !isMobile && <CardContainer size={3} container />}
 
-      <CardContainer size={{ xs: 12, md: containerCardSize }} container>
-        <BoxCard $backgroundColor={backgroundColor} $quantity={qtd}>
-          {qtd > 0 && (
-            <Box sx={{ display: { xs: "none", md: "block" } }}>
-              <IoIdCardOutline size={60} color="#fff" />
-            </Box>
-          )}
+      {(!isMobile || !filterMissing || quantity === 0) && (
+        <CardContainer size={{ xs: 12, md: containerCardSize }} container>
+          <BoxCard $backgroundColor={backgroundColor} $quantity={qtd}>
+            {qtd > 0 && (
+              <Box sx={{ display: { xs: "none", md: "block" } }}>
+                <IoIdCardOutline size={60} color="#fff" />
+              </Box>
+            )}
 
-          {qtd > 0 && (
-            <BoxToolTipMobile>
-              <Tooltip
-                title={`${qtd - 1} figurinhas repetidas`}
-                placement="top"
-                arrow
-              >
-                <Badge badgeContent={qtd - 1} color="error">
-                  <IoIdCardOutline size={32} color="#000" />
-                </Badge>
-              </Tooltip>
-            </BoxToolTipMobile>
-          )}
-
-          {shouldShowCode && (
-            <CardCode>{code === "FWC" && number === 0 ? "" : code}</CardCode>
-          )}
-
-          <CardNumber>
-            {isMobile && "_"}
-            {number === 0 && code === "FWC" ? "00" : number}
-          </CardNumber>
-
-          <CardControlGroup>
-            <BoxToolTipDesktop>
-              {qtd > 0 && (
+            {qtd > 0 && (
+              <BoxToolTipMobile>
                 <Tooltip
                   title={`${qtd - 1} figurinhas repetidas`}
                   placement="top"
                   arrow
                 >
                   <Badge badgeContent={qtd - 1} color="error">
-                    <IoIdCardOutline size={32} color="#fff" />
+                    <IoIdCardOutline size={32} color="#000" />
                   </Badge>
                 </Tooltip>
-              )}
-            </BoxToolTipDesktop>
+              </BoxToolTipMobile>
+            )}
 
-            <BoxGroupButton>
-              {qtd !== 0 && (
-                <IconButton
-                  aria-label="remove card"
-                  color="primary"
-                  size="small"
-                  sx={{ border: "2px solid #fff" }}
-                  onClick={() => removeSticker(stickerId)}
-                >
-                  <RemoveIcon sx={{ color: "#fff" }} />
-                </IconButton>
-              )}
+            {shouldShowCode && (
+              <CardCode>{code === "FWC" && number === 0 ? "" : code}</CardCode>
+            )}
 
-              <IconButton
-                aria-label="add card"
-                color="primary"
-                size="small"
-                sx={{ border: "2px solid #fff" }}
-                onClick={() => addSticker(stickerId)}
-              >
-                <AddIcon sx={{ color: "#fff" }} />
-              </IconButton>
-            </BoxGroupButton>
-          </CardControlGroup>
-        </BoxCard>
-      </CardContainer>
+            <CardNumber>
+              {isMobile && "_"}
+              {number === 0 && code === "FWC" ? "00" : number}
+            </CardNumber>
+
+            <CardControlGroup>
+              <BoxToolTipDesktop>
+                {qtd > 0 && (
+                  <Tooltip
+                    title={`${qtd - 1} figurinhas repetidas`}
+                    placement="top"
+                    arrow
+                  >
+                    <Badge badgeContent={qtd - 1} color="error">
+                      <IoIdCardOutline size={32} color="#fff" />
+                    </Badge>
+                  </Tooltip>
+                )}
+              </BoxToolTipDesktop>
+
+              <BoxGroupButton>
+                {qtd !== 0 && (
+                  <IconButton
+                    aria-label="remove card"
+                    color="primary"
+                    size="small"
+                    sx={{ border: "2px solid #fff" }}
+                    onClick={() => removeSticker(stickerId)}
+                  >
+                    <RemoveIcon sx={{ color: "#fff" }} />
+                  </IconButton>
+                )}
+
+                {!repeatedFormat && (
+                  <IconButton
+                    aria-label="add card"
+                    color="primary"
+                    size="small"
+                    sx={{ border: "2px solid #fff" }}
+                    onClick={() => addSticker(stickerId)}
+                  >
+                    <AddIcon sx={{ color: "#fff" }} />
+                  </IconButton>
+                )}
+              </BoxGroupButton>
+            </CardControlGroup>
+          </BoxCard>
+        </CardContainer>
+      )}
     </>
   );
 };

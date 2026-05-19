@@ -1,15 +1,10 @@
 import { useParams } from "react-router";
-import { Page } from "../../components/page";
-import { Controls } from "../../components/controls";
-import { EquipePageContainer } from "./equipe.styles";
-import { useCountriesStore } from "../../stores/useCountriesStore";
-import { clarityColor } from "../../utils/opacity";
-import type { PageType } from "../../components/page/page.types";
 import { Toolbar } from "@mui/material";
-
-interface EquipePageProps {
-  type: PageType;
-}
+import { useCountriesStore } from "../../stores/useCountriesStore";
+import { Page, Controls, Loading } from "../../components";
+import { clarityColor } from "../../utils/opacity";
+import { EquipePageContainer } from "./equipe.styles";
+import type { EquipePageProps } from "./equipe.types";
 
 export const EquipePage = ({ type }: EquipePageProps) => {
   const params = useParams();
@@ -20,7 +15,7 @@ export const EquipePage = ({ type }: EquipePageProps) => {
   const country = getCountryByCode(code || "");
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading fullHeight />;
   }
 
   if (type === "TEAM" && (!code || !country)) {

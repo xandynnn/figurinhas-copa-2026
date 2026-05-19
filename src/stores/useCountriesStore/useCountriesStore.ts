@@ -13,6 +13,7 @@ export const useCountriesStore = create<CountriesStore>()(
       selectedCountry: countries[0] || null,
       isLoading: false,
       collection: {},
+      filterMissing: false,
 
       fetchCountries: async () => {
         if (get().countries.length > 0) return;
@@ -65,12 +66,16 @@ export const useCountriesStore = create<CountriesStore>()(
             },
           };
         }),
+
+      setFilterMissing: () =>
+        set((state) => ({ filterMissing: !state.filterMissing })),
     }),
     {
       name: "album-storage",
       partialize: (state) => ({
         collection: state.collection,
         selectedCountry: state.selectedCountry,
+        filterMissing: state.filterMissing,
       }),
     },
   ),
