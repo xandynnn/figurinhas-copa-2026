@@ -9,6 +9,8 @@ export const BoxHome = styled(Box)(() => ({
   flexDirection: "column",
   gap: theme.spacing(4),
   padding: theme.spacing(4),
+  background:
+    "radial-gradient(circle at center, #d9ff57 0%, #5ba400 45%, #145a00 100%)",
 }));
 
 export const ProgressInfo = styled(Box)(({ theme }) => ({
