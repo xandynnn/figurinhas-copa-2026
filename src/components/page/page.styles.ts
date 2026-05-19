@@ -11,11 +11,15 @@ export const PageContainer = styled(Grid)(({ theme }) => ({
   },
   [theme.breakpoints.down("md")]: {
     paddingBottom: theme.spacing(1),
+    minHeight: "100vh",
+    gap: 0,
+    flexDirection: "column",
+    justifyContent: "flex-start",
   },
 }));
 
 export const Side = styled(Grid)(({ theme }) => ({
-  padding: 8,
+  padding: theme.spacing(1),
   "&:nth-child(1)": {
     borderRight: "1px solid #ccc",
   },
