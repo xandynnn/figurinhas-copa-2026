@@ -17,6 +17,7 @@ import {
   cocaColaObject,
   fifaObject,
 } from "../../components/controls/controls.utils";
+import { InstallButton } from "../../components/installButton";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -124,6 +125,7 @@ export const Home = () => {
           <MenuItem value="CC">Coca-Cola</MenuItem>
         </Select>
       </FormControl>
+      <InstallButton />
     </BoxHome>
   );
 };
