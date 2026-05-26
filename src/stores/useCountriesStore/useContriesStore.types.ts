@@ -14,4 +14,5 @@ export interface CountriesStore {
   addSticker: (stickerId: string) => void;
   removeSticker: (stickerId: string) => void;
   setFilterMissing: () => void;
+  isSectionCompleted: (code: string) => boolean;
 }

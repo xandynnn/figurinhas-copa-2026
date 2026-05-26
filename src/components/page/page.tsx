@@ -1,6 +1,7 @@
 import { useCountriesStore } from "../../stores/useCountriesStore";
 import { clarityColor } from "../../utils/opacity";
 import { Card } from "../card/card";
+import { CongratulationsCard } from "../congratulationsCard";
 import { Title } from "../title";
 import { PageContainer, Side } from "./page.styles";
 import type { PageProps, Sticker } from "./page.types";
@@ -39,6 +40,14 @@ const generateTeamStickers = (teamCode: string) => {
 
 export const Page = ({ country, type }: PageProps) => {
   const collection = useCountriesStore((s) => s.collection);
+  const isSectionCompleted = useCountriesStore(
+    (state) => state.isSectionCompleted,
+  );
+
+  const sectionCode =
+    type === "TEAM" ? country?.code || "" : type === "FWC" ? "FWC" : "CC";
+
+  const isCompleted = isSectionCompleted(sectionCode);
 
   let slots: Sticker[] = [];
 
@@ -78,6 +87,8 @@ export const Page = ({ country, type }: PageProps) => {
             tertiaryColor={tertiaryColor}
           />
         )}
+
+        {isCompleted && <CongratulationsCard teamName={country?.name || ""} />}
 
         {left.map((sticker) => (
           <Card

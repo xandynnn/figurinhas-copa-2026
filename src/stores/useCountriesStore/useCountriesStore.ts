@@ -69,6 +69,41 @@ export const useCountriesStore = create<CountriesStore>()(
 
       setFilterMissing: () =>
         set((state) => ({ filterMissing: !state.filterMissing })),
+
+      isSectionCompleted: (code: string) => {
+        const state = get();
+
+        const teamCode = code?.toUpperCase?.() ?? code;
+        if (!teamCode) return false;
+
+        const team = state.countries.find((c) => c.code === teamCode);
+        if (team) {
+          const total = 20;
+          const ids = Array.from(
+            { length: total },
+            (_, i) => `TEAM_${teamCode}_${i + 1}`,
+          );
+          const collected = ids.filter(
+            (id) => (state.collection[id] || 0) > 0,
+          ).length;
+          return collected === total;
+        }
+
+        if (teamCode === "FWC") {
+          const ids = [
+            "FWC_0",
+            ...Array.from({ length: 19 }, (_, i) => `FWC_${i + 1}`),
+          ];
+          return ids.every((id) => (state.collection[id] || 0) > 0);
+        }
+
+        if (teamCode === "CC") {
+          const ids = Array.from({ length: 14 }, (_, i) => `CC_${i + 1}`);
+          return ids.every((id) => (state.collection[id] || 0) > 0);
+        }
+
+        return false;
+      },
     }),
     {
       name: "album-storage",
