@@ -12,6 +12,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import { TbCards } from "react-icons/tb";
 import { TbPlayCardOff } from "react-icons/tb";
+import { TbPlayCardStar } from "react-icons/tb";
 import {
   Actual,
   BoxTexts,
@@ -34,6 +35,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import { sortTeamsAlphabetically } from "../../utils/sort";
+import { CountryName } from "../../pages/missed/missed.styles";
 
 type Props = {
   children: React.ReactElement;
@@ -50,7 +52,11 @@ export const HideOnScroll = ({ children, direction = "down" }: Props) => {
   );
 };
 
-export const Controls = ({ countryCode, type }: ControlsProps) => {
+export const Controls = ({
+  countryCode,
+  type,
+  mode = "collection",
+}: ControlsProps) => {
   const countries = useCountriesStore((e) => e.countries);
   const navigate = useNavigate();
   const selectedCountry = useCountriesStore((e) => e.selectedCountry);
@@ -126,7 +132,25 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
     }
   };
 
+  const setNavigate = (path: string) => {
+    navigate(path);
+  };
+
   const sortedCountries = sortTeamsAlphabetically(countries);
+
+  const teamIds = countries.flatMap((c) =>
+    Array.from({ length: 20 }, (_, i) => `TEAM_${c.code}_${i + 1}`),
+  );
+
+  const fwcIds = [
+    "FWC_0",
+    ...Array.from({ length: 19 }, (_, i) => `FWC_${i + 1}`),
+  ];
+  const ccIds = Array.from({ length: 14 }, (_, i) => `CC_${i + 1}`);
+  const allIds = [...teamIds, ...fwcIds, ...ccIds];
+  const collected = allIds.filter((id) => (collection[id] || 0) > 0).length;
+  const total = allIds.length;
+  const allPercentage = Math.round((collected / total) * 100);
 
   return (
     <>
@@ -138,28 +162,34 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
                 <HomeIcon />
               </HomeButton>
             </Tooltip>
-
-            <FormControlInput>
-              <InputLabel id="team-select-label">Seleção</InputLabel>
-              <Select
-                labelId="team-select-label"
-                id="team-select"
-                label="Seleção"
-                value={selectedCountry?.code}
-                onChange={handleSelectChange}
-                sx={{
-                  width: "100%",
-                }}
-              >
-                <MenuItem value="FWC">Fifa World Cup</MenuItem>
-                {sortedCountries.map((c) => (
-                  <MenuItem key={c.code} value={c.code}>
-                    {c.name}
-                  </MenuItem>
-                ))}
-                <MenuItem value="CC">Coca-Cola</MenuItem>
-              </Select>
-            </FormControlInput>
+            {mode === "missing" && (
+              <CountryName color="error" variant="h6">
+                Faltantes
+              </CountryName>
+            )}
+            {mode === "collection" && (
+              <FormControlInput>
+                <InputLabel id="team-select-label">Seleção</InputLabel>
+                <Select
+                  labelId="team-select-label"
+                  id="team-select"
+                  label="Seleção"
+                  value={selectedCountry?.code}
+                  onChange={handleSelectChange}
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <MenuItem value="FWC">Fifa World Cup</MenuItem>
+                  {sortedCountries.map((c) => (
+                    <MenuItem key={c.code} value={c.code}>
+                      {c.name}
+                    </MenuItem>
+                  ))}
+                  <MenuItem value="CC">Coca-Cola</MenuItem>
+                </Select>
+              </FormControlInput>
+            )}
 
             {!isMobile && (
               <BoxTexts>
@@ -173,30 +203,32 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
               </BoxTexts>
             )}
 
-            <FormControlButtons>
-              <Tooltip title="Voltar à página anterior" arrow>
-                <IconButton
-                  color="primary"
-                  onClick={handlePrev}
-                  disabled={selectedCountry.id == 0}
-                >
-                  <ArrowBackIosNewIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Ir para próxima página" arrow>
-                <IconButton
-                  color="primary"
-                  onClick={handleNext}
-                  disabled={selectedCountry.id == 49}
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </Tooltip>
-            </FormControlButtons>
+            {mode === "collection" && (
+              <FormControlButtons>
+                <Tooltip title="Voltar à página anterior" arrow>
+                  <IconButton
+                    color="primary"
+                    onClick={handlePrev}
+                    disabled={selectedCountry.id == 0}
+                  >
+                    <ArrowBackIosNewIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Ir para próxima página" arrow>
+                  <IconButton
+                    color="primary"
+                    onClick={handleNext}
+                    disabled={selectedCountry.id == 49}
+                  >
+                    <ArrowForwardIosIcon />
+                  </IconButton>
+                </Tooltip>
+              </FormControlButtons>
+            )}
 
             <ProgressBarLinear
               variant="determinate"
-              value={percentage}
+              value={mode === "missing" ? allPercentage : percentage}
               aria-label="Export data"
               $progressBackground={selectedCountry.colors.tertiary || "#ccc"}
               $progressColor={selectedCountry.colors.primary}
@@ -207,24 +239,36 @@ export const Controls = ({ countryCode, type }: ControlsProps) => {
       {isMobile && (
         <HideOnScroll direction="up">
           <BoxTexts>
-            <IconButton
-              color={filterMissing ? "primary" : "error"}
-              onClick={setFilterMissing}
-            >
-              {filterMissing ? (
-                <TbCards size={34} />
-              ) : (
-                <TbPlayCardOff size={34} />
-              )}
-            </IconButton>
+            {mode === "collection" && (
+              <>
+                <IconButton
+                  color={filterMissing ? "primary" : "error"}
+                  onClick={setFilterMissing}
+                >
+                  {filterMissing ? (
+                    <TbCards size={34} />
+                  ) : (
+                    <TbPlayCardOff size={34} />
+                  )}
+                </IconButton>
+                <IconButton
+                  color="primary"
+                  onClick={() => setNavigate("/faltantes")}
+                >
+                  <TbPlayCardStar size={34} />
+                </IconButton>
+              </>
+            )}
+
             <RightBox>
               <Texts>
-                <Actual>{present} /</Actual>
-                <Total>{ids.length}</Total>
+                <Actual>{mode === "missing" ? collected : present} /</Actual>
+                <Total>{mode === "missing" ? total : ids.length}</Total>
               </Texts>
 
               <Percentage>
-                {percentage}% <span>Concluído</span>
+                {mode === "missing" ? allPercentage : percentage}%{" "}
+                <span>Concluído</span>
               </Percentage>
             </RightBox>
           </BoxTexts>

@@ -3,6 +3,7 @@ import { Home } from "../pages/home";
 import { Album } from "../pages/album";
 import { Repetidas } from "../pages/repetidas";
 import { CcPage, FwcPage, TeamPage } from "./pages";
+import { MissedPage } from "../pages/missed";
 
 export const router = createBrowserRouter([
   { index: true, Component: Home },
@@ -27,5 +28,9 @@ export const router = createBrowserRouter([
   {
     Component: Repetidas,
     path: "/repetidas",
+  },
+  {
+    Component: MissedPage,
+    path: "/faltantes",
   },
 ]);
