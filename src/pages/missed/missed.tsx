@@ -2,8 +2,9 @@ import { useMemo } from "react";
 import { useCountriesStore } from "../../stores/useCountriesStore";
 import { Card } from "../../components/card/card";
 import { Container, CountryName } from "./missed.styles";
-import { Controls } from "../../components";
+import { Controls, FlagImage } from "../../components";
 import { Toolbar } from "@mui/material";
+import { getFlagImage } from "../../utils/getFlag";
 
 export const MissedPage = () => {
   const { countries, collection } = useCountriesStore();
@@ -34,7 +35,8 @@ export const MissedPage = () => {
       {missingByCountry.map(({ country, missing }) => (
         <div key={country.code}>
           <CountryName>
-            {country.name} ({missing.length})
+            <FlagImage image={getFlagImage(country.code)} />{" "}
+            <span>{country.name}</span>
           </CountryName>
 
           {missing.length >= 1 && (

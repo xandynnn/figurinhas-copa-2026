@@ -12,4 +12,8 @@ export const CountryName = styled(Typography)(({ theme }) => ({
   fontSize: 28,
   textTransform: "uppercase",
   padding: theme.spacing(1),
+  display: "flex",
+  alignItems: "center",
+  gap: theme.spacing(1),
+  justifyContent: "flex-start",
 }));
